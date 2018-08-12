@@ -40,7 +40,7 @@ def pick_edges(graph, count):
     G = nx.Graph(graph)
     edges = []
     while len(edges) < count:
-        G_edges = G.edges()
+        G_edges = list(G.edges())
         i = np.random.randint(len(G_edges))
         u, v = G_edges[i]
         G.remove_edge(u, v)
@@ -55,13 +55,13 @@ def pick_false_edges(graph, count):
     G = nx.Graph(graph)
     edges = []
     while len(edges) < count:
-        G_nodes = G.nodes()
+        G_nodes = list(G.nodes())
         i = np.random.randint(len(G_nodes))
         j = np.random.randint(len(G_nodes))
         u = G_nodes[i]
         v = G_nodes[j]
-
-        if v not in G.neighbors(u) + [u]:
+        
+	if v not in list(G.neighbors(u)) + [u]:
             edges.append([min(u,v), max(u,v)])
             G.add_edge(u, v)
     return edges
